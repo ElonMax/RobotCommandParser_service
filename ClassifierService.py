@@ -3,6 +3,7 @@ from datetime import datetime
 import yaml
 import logging
 from flask import Flask, request, jsonify
+from RobotCommandParser.ClassificationUtils.ClassifierWrapper import ClassifierWrapper
 
 # Загрузка конфига
 with open("Configs/ClassifierService.yml", "r") as f:
@@ -18,6 +19,8 @@ logging.basicConfig(format='[%(asctime)s] /%(filename)s.%(funcName)s/ %(levelnam
 
 logging.info("Starting CommandClassifier service")
 
+classifierWrapper = ClassifierWrapper(CONFIG)
+classifierWrapper.load_model()
 # Настройка и запуск flask сервиса
 app = Flask("ClassifierService")
 
@@ -34,8 +37,10 @@ def isready():
     """
     Проверка, что сервис запущен. настрен. модель подгружена и крутится ожидает данных
     """
-    raise NotImplementedError("Метод проверки ещё не реализован")
-    return "", 503
+    if classifierWrapper.model is not None:
+        return "OK", 200
+    else:
+        return "Model is not loaded", 503
 
 
 @app.route("/classify_phrases", methods=['POST'])
@@ -49,6 +54,8 @@ def classify_phrases():
     if request.is_json:
         json_data = request.get_json()
         logging.debug("Принятый json:{}".format(json_data))
+        classification_results = classifierWrapper.predict(json_data["commands"])
+        result["parse_result"] = classification_results
         return jsonify(result)
     else:
         raise NotImplementedError("В методе parse_long реализована только обработка json данных. Переданные в POST "

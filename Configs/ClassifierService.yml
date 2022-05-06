@@ -1,3 +1,10 @@
 host: 127.0.0.1
 port: 8892
 isdebug: True
+use_gpu: False
+Model:
+  model_type: bert
+  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Models/Classifier/MyMultiTiny2_f1ep10
+  num_sublabels_per_biglabel: [10, 9, 13, 25, 15, 2, 6, 15, 6, 15, 5, 2]
+  add_attention_for_labels: False
+  target_labels: ["action", "direction", "meters", "degshours", "object1", "nearest", "relation1", "object2", "relation2", "object3", "self", "gaze"]
