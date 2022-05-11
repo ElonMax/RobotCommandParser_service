@@ -1,3 +1,39 @@
 host: 127.0.0.1
 port: 8893
 isdebug: True
+udpipe_model_path: /media/grartem/B7DB5B36121B73AA/Projects/udpipe/Models/russian-syntagrus-ud-2.5-191206.udpipe
+Model:
+  #data_dir = /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/
+  log_dir: /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/rubert_ffnn150x2_lr001_200ep_nometa_fixBounds/
+  bert_config_file: /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/rubert_ffnn150x2_lr001_200ep_nometa_fixBounds/config.json
+  vocab_file: /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/rubert_ffnn150x2_lr001_200ep_nometa_fixBounds/vocab.txt
+  tf_checkpoint: /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/rubert_ffnn150x2_lr001_200ep_nometa_fixBounds/model.max.ckpt
+  init_checkpoint: /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/rubert_ffnn150x2_lr001_200ep_nometa_fixBounds/model.max.ckpt
+  #num_docs = 2
+  max_top_antecedents: 50
+  max_training_sentences: 11
+  top_span_ratio: 0.4
+  max_num_speakers: 1
+  max_segment_len: 512
+  bert_learning_rate: 1e-05
+  task_learning_rate: 0.001
+  dropout_rate: 0.3
+  ffnn_size: 150
+  ffnn_depth: 2
+  num_epochs: 200
+  feature_size: 20
+  max_span_width: 30
+  use_metadata: False
+  use_features: True
+  use_segment_distance: True
+  model_heads: True
+  coref_depth: 2
+  coarse_to_fine: True
+  fine_grained: True
+  use_prior: True
+  single_example: True
+  genres: ["-"]
+  eval_frequency: 1000
+  report_frequency: 100
+  adam_eps: 1e-06
+  task_optimizer: adam

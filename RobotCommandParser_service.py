@@ -12,7 +12,7 @@ with open("Configs/RobotCommandParser_service.yml", "r") as f:
 # Настройка логгирования
 if not os.path.exists("Logs/RobotCommandParser_service"):
     os.mkdir("Logs/RobotCommandParser_service")
-logging.basicConfig(format='[%(asctime)s] /%(filename)s.%(funcName)s/ %(levelname)s: %(message)s',
+logging.basicConfig(format='[%(asctime)s][%(filename)s.%(funcName)s]%(levelname)s: %(message)s',
                     filename="Logs/RobotCommandParser_service/{}.log".format(datetime.now().strftime("%Y-%m-%d_%H-%M-%S")),
                     level=logging.DEBUG if CONFIG["isdebug"] else logging.INFO,
                     datefmt="%Y-%m-%d_%H-%M-%S")

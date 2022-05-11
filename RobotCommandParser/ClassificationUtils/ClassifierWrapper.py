@@ -56,6 +56,8 @@ class ClassifierWrapper:
         :return:
             parse_output_list: list - список списков пар лейбл-класс
         """
+        if type(phrases) == str:
+            phrases = [phrases]
         if self.model is None:
             raise ValueError("Model is not loaded. Call ClassifierWrapper().load_model() before making any predictions")
         with torch.no_grad():
