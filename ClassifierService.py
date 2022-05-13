@@ -24,8 +24,14 @@ classifierWrapper.load_model()
 # Настройка и запуск flask сервиса
 app = Flask("ClassifierService")
 
-INDEX_PAGE_HELP_TEXT = "<h1>Short command classifier</h1>"
-
+INDEX_PAGE_HELP_TEXT = "<h1>Short command classifier</h1>" \
+                       "<h2>api:</h2>" \
+                       "<ul><li>/isready - проводит проверку, загружена ли модель и готов ли сервис к использованию" \
+                       "возвращает текст OK и статус 200, если все готово иначе 'Model is not loaded' со статусом 503</li>" \
+                       "<li>/classify_phrases - Метод обрабатывает post запрос с json данными, содержащими в ключе " \
+                       "'commands' строки с короткими командами." \
+                       "Возвращается json c ключем parse_result и значением - списком списков пар из лейблов и классов. " \
+                       "Например [[('action', 'move_to'), ('object1', 'house')]]</li></ul>"
 
 @app.route("/")
 def hello_world():
