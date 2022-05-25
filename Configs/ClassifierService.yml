@@ -1,6 +1,6 @@
 host: 127.0.0.1
 port: 8892
-isdebug: True
+isdebug: False
 use_gpu: False
 Model:
   model_type: bert

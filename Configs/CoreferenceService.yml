@@ -1,6 +1,6 @@
 host: 127.0.0.1
 port: 8893
-isdebug: True
+isdebug: False
 udpipe_model_path: /media/grartem/B7DB5B36121B73AA/Projects/udpipe/Models/russian-syntagrus-ud-2.5-191206.udpipe
 Model:
   #data_dir = /media/grartem/B7DB5B36121B73AA/Projects/Coreference/coref/Data/Russian/tmp_ntbk/
