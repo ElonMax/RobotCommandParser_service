@@ -2,9 +2,11 @@ host: 127.0.0.1
 port: 8892
 isdebug: False
 use_gpu: False
+check_possible_combinations: True
+possible_combinations_table: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Data/possible_combinations_of_attributes_for_actions.csv
 Model:
   model_type: bert
-  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Models/Classifier/MyMultiTiny2_f1ep10
-  num_sublabels_per_biglabel: [10, 9, 13, 25, 15, 2, 6, 15, 6, 15, 5, 2]
+  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Models/Classifier/MyMultiTiny2_data3v2_f1ep20
+  num_sublabels_per_biglabel: [13, 9, 13, 25, 15, 2, 6, 15, 6, 15, 5, 2]
   add_attention_for_labels: False
   target_labels: ["action", "direction", "meters", "degshours", "object1", "nearest", "relation1", "object2", "relation2", "object3", "self", "gaze"]
