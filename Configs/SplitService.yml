@@ -4,5 +4,5 @@ isdebug: False
 use_gpu: False
 Model:
   model_type: bert
-  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Models/Splitter/TokenCLS_sepPredictor_ipynb/checkpoint-20664-epoch-9
-  labels: ["O", "[SEP]"]
+  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Models/Splitter/TokenCLS_sepPredictor_ipynb_Copy1_data3v2
+  labels: ["O", "[SEP]", "[CMD]"]

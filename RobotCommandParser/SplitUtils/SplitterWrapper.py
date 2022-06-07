@@ -44,6 +44,8 @@ class SplitterWrapper:
         current_command = []
         for token in predictions[0]:
             token, cls = list(token.items())[0]
+            if cls == "O":
+                continue
             current_command.append(token)
             if cls == "[SEP]":
                 subcommands.append(" ".join(current_command))
