@@ -10,11 +10,18 @@ class GappingWrapper:
         self.config = config
         self.model = None
         self.tokenizer = None
+        if config['use_gpu']:
+            if torch.cuda.is_available():
+                self.device = torch.device("cuda")
+            else:
+                raise ValueError("В конфиге указан флаг использования гпу, но torch не обнаружил доступных гпу")
+        else:
+            self.device = "cpu"
 
     def load_model(self):
         self.model = get_model(self.config)
         self.model.load_state_dict(
-            torch.load(self.config["checkpoint_path"]))
+            torch.load(self.config["checkpoint_path"], map_location=self.device))
         self.model.eval()
         self.tokenizer = get_tokenizer(self.config)
 

@@ -54,7 +54,7 @@ def split_command():
     Метод получает на вход json с ключем "commands" по которому находится строка с составной командой
     Возвращает json с ключем split_results, по которому лежит список строк
     """
-    result = {"parse_result": []}
+    result = {"split_results": []}
     if request.is_json:
         json_data = request.get_json()
         logging.debug("Принятый json:{}".format(json_data))
