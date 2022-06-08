@@ -4,3 +4,5 @@ isdebug: False
 use_coreference: True
 classifier_url: 127.0.0.1:8892
 coreference_url: 127.0.0.1:8893
+splitter_url: 127.0.0.1:8894
+gapping_url: 127.0.0.1:8895

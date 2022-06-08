@@ -1,0 +1,16 @@
+host: 127.0.0.1
+port: 8895
+isdebug: False
+Wrapper:
+  use_gpu: False
+  task_name: agrr
+#  bert_model: /media/grartem/B7DB5B36121B73AA/Projects/HuggingFace/models/rubert-tiny2/
+  bert_model: /media/grartem/B7DB5B36121B73AA/Projects/HuggingFace/models/rubert-tiny2/
+  checkpoint_path: /media/grartem/B7DB5B36121B73AA/Projects/RobotCommandParser_service/Models/Gapping/FriMay272022_model_f1_score=8130.pt
+#  'train_batch_size': 32,
+#  'accumulation_iters': 1,
+#  'dev_batch_size': 32,
+  max_seq_length: 128
+  do_lower_case: False
+ # 'num_workers': 2,
+ # 'learning_rate': 1e-05,

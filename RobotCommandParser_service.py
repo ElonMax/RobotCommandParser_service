@@ -64,6 +64,10 @@ def parse_long():
     if request.is_json:
         json_data = request.get_json()
         logging.debug("Принятый json:{}".format(json_data))
+        gapping_results = requests.post(CONFIG["gapping_url"], json={"commands": [json_data["command"]]})
+        split_results = requests.post(CONFIG["splitter_url"], json={"commands": [gapping_results["commands"]]})
+        classification_results = requests.post(CONFIG["classifier_url"], json={"commands": [split_results]})
+        result["parse_result"] = classification_results
         return jsonify(result)
     else:
         raise NotImplementedError("В методе parse_long реализована только обработка json данных. Переданные в POST "
