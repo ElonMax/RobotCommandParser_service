@@ -2,7 +2,7 @@ import time
 import requests
 
 TEST_ONLY_SHORT_COMMANDS = True
-SERVICE_URL = "http://127.0.0.1:8894/split_commands"
+SERVICE_URL = "http://127.0.0.1:8896/split_commands"
 time_deltas = []
 with open("Data/service_test_examples_split.txt", "r") as inf, open("Data/service_test_examples_split_response.txt", "w") as outf:
     for line in inf:
@@ -15,4 +15,5 @@ with open("Data/service_test_examples_split.txt", "r") as inf, open("Data/servic
             outf.write("\tCMD:"+subcmd)
         outf.write("\n")
 avg_time = sum(time_deltas) / len(time_deltas)
+print("number of lines:", len(time_deltas))
 print("AVG line time to process lines one by one: {}".format(avg_time))

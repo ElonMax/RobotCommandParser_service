@@ -27,3 +27,17 @@ for line in commands:
     print()
 avg_time = sum(time_deltas) / len(time_deltas)
 print("AVG line time to process lines one by one: {}".format(avg_time))
+
+
+time_deltas = []
+with open("Data/gap_examples.txt", "r") as inf, open("Data/gap_examples_response.txt", "w") as outf:
+    for line in inf:
+        start_time = time.time()
+        response = requests.post(SERVICE_URL, json={"commands": line})
+        time_deltas.append(time.time() - start_time)
+        parse_results_to_line = response.json()["commands"]
+        outf.write("INPUT:"+line)
+        outf.write("GAPP:"+parse_results_to_line[0])
+        outf.write("\n")
+avg_time = sum(time_deltas) / len(time_deltas)
+print("AVG line time to process lines one by one: {}".format(avg_time))
