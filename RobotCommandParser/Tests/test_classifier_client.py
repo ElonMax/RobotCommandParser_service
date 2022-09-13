@@ -14,7 +14,7 @@ response = response.json()
 with open("Data/service_test_examples_short_response.txt", "w") as f:
     for i in range(len(commands)):
         parse_results_to_line = response["parse_result"][i]
-        parse_results_to_line = "; ".join(["{}:{}".format(l, c) for l, c in parse_results_to_line])
+        parse_results_to_line = "; ".join(["{}:{}({})".format(l, c, p) for l, c, p in parse_results_to_line])
         f.write(commands[i].strip()+"\t-\t" + parse_results_to_line +"\n")
 print(len(commands), "lines processed in {} seconds".format(time.time()-start_time))
 

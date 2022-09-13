@@ -87,9 +87,10 @@ class ClassifierWrapper:
         logits = logits[0].cpu()
         # превращаем логитсы для one-hot кодированных лейблов в нормальный мальтилейбл+мультикласс
         if self.check_possible_combinations:
-            predictions = self.postprocess_with_rule_for_possible_combinations(logits.numpy())
+            predictions, command_template_prob, probs_details  = self.postprocess_with_rule_for_possible_combinations(logits.numpy())
         else:
             predictions = np.zeros((logits.shape[0], len(self.onehotenc.categories_)), dtype=np.int16)
+            probs, probs_details = None, None # TODO: тут их тоже можно расчитать, но пока не к спеху, оставлю как туду
             for i in range(predictions.shape[0]):
                 shift = 0
                 for j in range(len(self.onehotenc.categories_)):
@@ -106,17 +107,28 @@ class ClassifierWrapper:
                 class_name = self.labels_names[label_name][predictions[phrase_i, label_i]]
                 if class_name == "":
                     continue
-                parse_output_list[-1].append((label_name, class_name))
+                if probs_details is not None:
+                    parse_output_list[-1].append((label_name, class_name, probs_details[phrase_i, label_i].astype(float)))
+                else:
+                    parse_output_list[-1].append((label_name, class_name))
         return parse_output_list
 
     def postprocess_with_rule_for_possible_combinations(self, raw_outputs):
+        """
+        params:
+            raw_outputs - ndarray(количество команд, общая длина выходного вектора) - выходы сетки, не нормализованные
+        returns:
+            predictions - ndarray(количество команд, количество атрибутов+экшн) - вектора с указанием класса экшена и класса атрибута для каждой команды
+            probs - ndarray(количество команд) - усредненная вероятность предсказания для каждой команды
+            probs_details - ndarray(количество команд, количество атрибутов+экшн) - вектора с вероятностями предсказанных классов
+        """
         softmax_outputs = np.zeros_like(raw_outputs, dtype=np.float32)
         shift = 0
         for num_sublabels in self.config['Model']['num_sublabels_per_biglabel']:
             softmax_outputs[:, shift:shift + num_sublabels] = softmax(raw_outputs[:, shift:shift + num_sublabels])
             shift += num_sublabels
 
-        predictions = []
+        predictions, command_template_prob, probs_details = [], [], []
         for i in range(len(softmax_outputs)):
             shift = 0
             probs_for_combinations = np.zeros_like(self.possible_combinations_arr, dtype=np.float32)
@@ -144,8 +156,12 @@ class ClassifierWrapper:
 
             best_template_i = np.argmax(np.sum(probs_for_combinations, axis=1))
             sample_prediction = self.possible_combinations_arr[best_template_i].copy()
-            for i in range(1, len(self.config['Model']['num_sublabels_per_biglabel'])):
-                if sample_prediction[i] != 0:
-                    sample_prediction[i] = maxprob_attribute_classes[i]
+            for j in range(1, len(self.config['Model']['num_sublabels_per_biglabel'])):
+                if sample_prediction[j] != 0:
+                    sample_prediction[j] = maxprob_attribute_classes[j]
             predictions.append(sample_prediction)
-        return np.array(predictions)
+            # как уверенность в разборе команды вернем среднее по атрибутам. 
+            # Хотя выше использовалась сумма, но разницы нет, если не исключать нули.
+            command_template_prob.append(np.mean(probs_for_combinations, axis=1)[best_template_i])
+            probs_details.append(probs_for_combinations[best_template_i])
+        return np.array(predictions), np.array(probs), np.array(probs_details)
