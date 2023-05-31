@@ -4,5 +4,6 @@ isdebug: False
 use_gpu: False
 Model:
   model_type: bert
-  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RL_robots/RobotCommandParser_service/Models/Splitter/TokenCLS_sepPredictor_ipynb_Copy1_data3v2
+#  model_path: /media/grartem/B7DB5B36121B73AA/Projects/RL_robots/RobotCommandParser_service/Models/Splitter/TokenCLS_sepPredictor_ipynb_Copy1_data3v2
+  model_path: /home/elnmax/arctic_build/RobotCommandParser_service/Models/Splitter/TokenCLS_sepPredictor_ipynb_Copy1_data3v2
   labels: ["[CMD]", "[SEP]","O"]
